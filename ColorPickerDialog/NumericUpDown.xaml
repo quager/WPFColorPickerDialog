@@ -1,0 +1,84 @@
+﻿<UserControl 
+    x:Class="ColorPickerDialog.NumericUpDown"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:ColorPickerDialog"
+    mc:Ignorable="d" 
+    d:DesignHeight="22" d:DesignWidth="60">
+    
+    <UserControl.Resources>
+        <Style x:Key="UpDownButton" TargetType="RepeatButton">
+            <Setter Property="Foreground" Value="#FF505050"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="Silver">
+                            <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseCaptured" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed"  Value="True">
+                                <Setter Property="Background" Value="Silver"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid MinHeight="22">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBox
+            Name="ValueControl"
+            Grid.RowSpan="2"
+            Margin="0 0 -1 0"
+            KeyDown="UpdateStringValue"
+            LostFocus="UpdateStringValue"
+            VerticalContentAlignment="Center"
+            Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NumericUpDown}}, Path=Value}"/>
+
+        <RepeatButton
+            Grid.Column="1"
+            Click="IncVersion"
+            Style="{StaticResource UpDownButton}">
+
+            <Path 
+                Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RepeatButton}}, Path=Foreground}"
+                Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RepeatButton}}, Path=Foreground}"
+                Data="M 1,5 L 5,1 9,5 1,5" 
+                StrokeStartLineCap="Round" 
+                StrokeLineJoin="Round" />
+        </RepeatButton>
+
+        <RepeatButton
+            Grid.Row="1"
+            Grid.Column="1"
+            Click="DecVersion"
+            Style="{StaticResource UpDownButton}">
+
+            <Path 
+                Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RepeatButton}}, Path=Foreground}"
+                Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RepeatButton}}, Path=Foreground}"
+                Data="M 1,1 L 9,1 5,5 1,1" 
+                StrokeStartLineCap="Round" 
+                StrokeLineJoin="Round" />
+        </RepeatButton>
+    </Grid>
+</UserControl>
